@@ -1,20 +1,21 @@
 # LaravelNotification
 ## First Create an account https://pusher.com/
-### click create new app on leftsite bootom corner on your pusher dashboard then click on App keys
-Past your keys in you .env file which you have copied form App Keys in you pusher
-```php
-env
-PUSHER_APP_ID=649978
-PUSHER_APP_KEY=a12347a154825569035a
-PUSHER_APP_SECRET=4e17b31339fb780de42d
 
-```
+
 
 First run the commond
 ```php
 
 php artisan make:notification Booking
 ```
+### Past the keys in your env
+```php
+env
+PUSHER_APP_ID=649978
+PUSHER_APP_KEY=a12347a154825569035a
+PUSHER_APP_SECRET=4e17b31339fb780de42d
+```
+
 # Model 
 use this in your model from where you want to send notification
 ```php
