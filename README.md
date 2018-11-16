@@ -1,18 +1,32 @@
 # LaravelNotification
+# First Create an account https://pusher.com/
+# click create new app on leftsite bootom corner on your pusher dashboard then click on App keys
 
-# Model 
+# Past your keys in you .env file which you have copied form App Keys in you pusher
+
+```php
+# env
+PUSHER_APP_ID=649978
+PUSHER_APP_KEY=a12347a154825569035a
+PUSHER_APP_SECRET=4e17b31339fb780de42d
+
+```
+
+
 ```php
 First run the commond
 php artisan make:notification Booking
-
+```
+# Model 
 use this in your model from where you want to send notification
+```php
 use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
 }
 ```
-#App\Notification folder
+# App\Notification folder
 ```php
 <?php
 
@@ -77,6 +91,13 @@ class Booking extends Notification
     }
 }
 
+```
+# Controller
 
+```php
+use App\Notifications\Booking;
+$user = App\User::first();
+$user->notify(new Newvisit("New Booking has created"));
 
-   ```
+```
+
