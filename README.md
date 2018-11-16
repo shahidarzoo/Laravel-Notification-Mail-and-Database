@@ -1,9 +1,6 @@
 # LaravelNotification
 ## First Create an account https://pusher.com/
-
-
-
-First run the commond
+### Run the artisan commond
 ```php
 
 php artisan make:notification Booking
