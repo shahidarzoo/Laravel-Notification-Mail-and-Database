@@ -10,9 +10,9 @@ PUSHER_APP_SECRET=4e17b31339fb780de42d
 
 ```
 
-
-```php
 First run the commond
+```php
+
 php artisan make:notification Booking
 ```
 # Model 
