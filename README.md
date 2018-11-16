@@ -4,7 +4,7 @@
 ### Run the artisan commond
 ```php
 
-php artisan make:notification Booking
+php artisan make:notification BookingNotification
 ```
 ### Past the keys in your env
 ```php
@@ -25,6 +25,7 @@ class User extends Authenticatable
 ```
 # App\Notification folder
 ```php
+
 <?php
 
 namespace App\Notifications;
@@ -34,7 +35,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class Booking extends Notification
+class BookingNotification extends Notification
 {
     use Queueable;
 
@@ -43,10 +44,12 @@ class Booking extends Notification
      *
      * @return void
      */
-    protected $my_notification; 
-    public function __construct($msg)
+    private $user = '';
+    protected $message; 
+    public function __construct($user, $message)
     {
-         $this->my_notification = $msg;
+        $this->user = $user;
+        $this->message = $message;
     }
 
     /**
@@ -57,7 +60,7 @@ class Booking extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
     /**
@@ -69,9 +72,10 @@ class Booking extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                   ->line('Welcome '.$this->my_notification)
-                   ->action('Welcome to Fastinternetcable', url('http://dev.fastinternetcable.com'))
-                   ->line('Thank you for using our application!');
+                    ->line('Hi '.$this->user)
+                    ->line($this->message)
+                    ->action('Welcome to Fastinternetcable', url('http://dev.fastinternetcable.com'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -83,18 +87,35 @@ class Booking extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'data' => 'New Booking has been created'
         ];
     }
 }
+
 
 ```
 # Controller
 
 ```php
-use App\Notifications\Booking;
-$user = App\User::first();
-$user->notify(new Newvisit("New Booking has created"));
+use App\Notifications\BookingNotification;
+public function index()
+{
+	$user = App\User::first();
+	$message = "New Booking Created";
+	$this->sendNotification($user, $message);
+}
+
+private function sendNotification($user, $message)
+{
+	try 
+	{
+	    $user->notify(new BookingNotification($user->name, $message));
+	} 
+	catch (Exception $exception) 
+	{
+	    echo $exception->getMessage();
+	}
+}
 
 ```
 # Database Notifications
