@@ -25,9 +25,6 @@ class User extends Authenticatable
 ```
 # App\Notification folder
 ```php
-
-<?php
-
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
