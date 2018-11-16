@@ -98,10 +98,8 @@ $user->notify(new Newvisit("New Booking has created"));
 
 ```
 # Database Notifications
-
+### Run artisan commond
 ```php
-Run artisan commond
-
 php artisan notifications:table
 
 php artisan migrate
@@ -109,6 +107,7 @@ php artisan migrate
 ```
 # Routs
 ```php
+use App\Notifications\TaskCompletedNotification;
 Route::get('/', function () {
 
 	$user = App\User::first();
@@ -128,20 +127,88 @@ Route::get('/markAsRead', function(){
 ```html
  <li class="dropdown">
                                 <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-bell"></i>
-                                    @if(auth()->user()->unReadNotifications->count())
-                                     <span class="badge badge-light">{{ auth()->user()->unReadNotifications->count() }}</span>
-                                     @endif
-                                </a>
+    <i class="fa fa-bell"></i>
+    @if(auth()->user()->unReadNotifications->count())
+     <span class="badge badge-light">{{ auth()->user()->unReadNotifications->count() }}</span>
+     @endif
+</a>
 
-                                <ul class="dropdown-menu">
-                                    <li><a style="margin-left: 27px;" href="{{route('markAsRead')}}">Mark all as read</a></li>
-                                    @foreach(auth()->user()->unReadNotifications as $notify)
-                                    <li class="dropdown-item" href="#">
-                                   <a href="#">{{$notify->data['data']}}</a>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </li>
+<ul class="dropdown-menu">
+    <li><a style="margin-left: 27px;" href="{{route('markAsRead')}}">Mark all as read</a></li>
+    @foreach(auth()->user()->unReadNotifications as $notify)
+    <li class="dropdown-item" href="#">
+   <a href="#">{{$notify->data['data']}}</a>
+    </li>
+    @endforeach
+</ul>
+</li>
+
+```
+# App\Notification TaskCompletedNotification
+```php
+
+
+<?php
+
+namespace App\Notifications;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+
+class TaskCompletedNotification extends Notification
+{
+    use Queueable;
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        return ['database'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            'data' => 'This is my first notification',
+        ];
+    }
+}
+
 
 ```
