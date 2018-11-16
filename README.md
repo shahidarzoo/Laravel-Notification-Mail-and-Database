@@ -9,9 +9,9 @@ php artisan make:notification Booking
 ### Past the keys in your env
 ```php
 env
-PUSHER_APP_ID=649978
-PUSHER_APP_KEY=a12347a154825569035a
-PUSHER_APP_SECRET=4e17b31339fb780de42d
+PUSHER_APP_ID=4234324324
+PUSHER_APP_KEY=***************
+PUSHER_APP_SECRET=*******************
 ```
 
 # Model 
