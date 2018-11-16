@@ -69,10 +69,10 @@ class BookingNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Hi '.$this->user)
-                    ->line($this->message)
-                    ->action('Welcome to Fastinternetcable', url('http://dev.fastinternetcable.com'))
-                    ->line('Thank you for using our application!');
+	    ->line('Hi '.$this->user)
+	    ->line($this->message)
+	    ->action('Welcome to Fastinternetcable', url('http://dev.fastinternetcable.com'))
+	    ->line('Thank you for using our application!');
     }
 
     /**
