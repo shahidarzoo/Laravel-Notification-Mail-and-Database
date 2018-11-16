@@ -147,9 +147,6 @@ Route::get('/markAsRead', function(){
 # App\Notification TaskCompletedNotification
 ```php
 
-
-<?php
-
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
