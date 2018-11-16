@@ -103,7 +103,7 @@ $user->notify(new Newvisit("New Booking has created"));
 php artisan notifications:table
 
 php artisan migrate
-
+php artisan make:notification TaskCompletedNotification
 ```
 # Routs
 ```php
