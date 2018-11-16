@@ -1,5 +1,6 @@
-# LaravelNotification
+# LaravelNotification By Mial and Database
 ## First Create an account https://pusher.com/
+### BY Mail
 ### Run the artisan commond
 ```php
 
@@ -96,4 +97,51 @@ $user = App\User::first();
 $user->notify(new Newvisit("New Booking has created"));
 
 ```
+# Database Notifications
 
+```php
+Run artisan commond
+
+php artisan notifications:table
+
+php artisan migrate
+
+```
+# Routs
+```php
+Route::get('/', function () {
+
+	$user = App\User::first();
+	$user->notify(new TaskCompletedNotification);
+    return view('welcome');
+});
+
+Route::get('/markAsRead', function(){
+	auth()->user()->unreadNotifications->markAsRead();
+	return redirect()->back();
+})->name('markAsRead');
+
+```
+
+# Views
+
+```html
+ <li class="dropdown">
+                                <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-bell"></i>
+                                    @if(auth()->user()->unReadNotifications->count())
+                                     <span class="badge badge-light">{{ auth()->user()->unReadNotifications->count() }}</span>
+                                     @endif
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a style="margin-left: 27px;" href="{{route('markAsRead')}}">Mark all as read</a></li>
+                                    @foreach(auth()->user()->unReadNotifications as $notify)
+                                    <li class="dropdown-item" href="#">
+                                   <a href="#">{{$notify->data['data']}}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+
+```
