@@ -143,21 +143,21 @@ Route::get('/markAsRead', function(){
 # Views
 
 ```html
- <li class="dropdown">
-                                <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-bell"></i>
-    @if(auth()->user()->unReadNotifications->count())
-     <span class="badge badge-light">{{ auth()->user()->unReadNotifications->count() }}</span>
-     @endif
+<li class="dropdown">
+<a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<i class="fa fa-bell"></i>
+@if(auth()->user()->unReadNotifications->count())
+<span class="badge badge-light">{{ auth()->user()->unReadNotifications->count() }}</span>
+@endif
 </a>
 
 <ul class="dropdown-menu">
-    <li><a style="margin-left: 27px;" href="{{route('markAsRead')}}">Mark all as read</a></li>
-    @foreach(auth()->user()->unReadNotifications as $notify)
-    <li class="dropdown-item" href="#">
-   <a href="#">{{$notify->data['data']}}</a>
-    </li>
-    @endforeach
+<li><a style="margin-left: 27px;" href="{{route('markAsRead')}}">Mark all as read</a></li>
+@foreach(auth()->user()->unReadNotifications as $notify)
+<li class="dropdown-item" href="#">
+<a href="#">{{$notify->data['data']}}</a>
+</li>
+@endforeach
 </ul>
 </li>
 
